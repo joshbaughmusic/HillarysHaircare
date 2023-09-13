@@ -15,6 +15,9 @@ export const NavBar = () => {
           <NavItem>
             <NavLink href="/customers">Customers</NavLink>
           </NavItem>
+          <NavItem>
+            <NavLink href="/appointments">Appointments</NavLink>
+          </NavItem>
         </Nav>
       </Navbar>
     </>
