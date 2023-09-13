@@ -47,5 +47,31 @@ app.MapGet("/api/customers", (HillarysHaircareDbContext db) =>
     return Results.Ok(db.Customers.ToList());
 });
 
+//appointments
+
+app.MapGet("/api/appointments", (HillarysHaircareDbContext db) =>
+{
+    List<Appointment> allAppointments = db.Appointments.ToList();
+    foreach (Appointment a in allAppointments)
+    {
+        a.Customer = db.Customers.SingleOrDefault(c => c.Id == a.CustomerId);
+        a.Stylist = db.Stylists.SingleOrDefault(s => s.Id == a.StylistId);
+        
+        List<AppointmentService> foundAppServs = db.AppointmentServices.Where(apsv => apsv.AppointmentId == a.Id).ToList();
+
+        List<Service> foundServs = new List<Service>();
+
+        foreach (AppointmentService apsv in foundAppServs)
+        {
+            Service singleServ = db.Services.FirstOrDefault(s => s.Id == apsv.ServiceId);
+
+            foundServs.Add(singleServ);
+        };
+
+        a.Services = foundServs;
+    };
+    return Results.Ok(allAppointments.ToList());
+});
+
 app.Run();
 

@@ -11,5 +11,7 @@ public class Appointment
     public int CustomerId { get; set; }
     public bool IsCancelled { get; set; }
     public List<Service> Services { get; set; }
+    public Stylist Stylist { get; set; }
+    public Customer Customer { get; set; }
     public decimal? TotalCost { get; }
 }
