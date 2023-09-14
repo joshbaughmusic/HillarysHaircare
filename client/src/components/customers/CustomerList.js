@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { fetchAllCustomers } from '../../dataManager/customerData.js';
 import { Button, Table } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { CustomerNew } from './CustomerNew.js';
 
 export const CustomerList = () => {
   const [allCustomers, setAllCustomers] = useState([]);
@@ -18,6 +19,8 @@ export const CustomerList = () => {
     <>
       <div className="container">
         <h3>Customers</h3>
+        <br />
+        <CustomerNew getAllCustomers={getAllCustomers}/>
         <Table>
           <thead>
             <tr>

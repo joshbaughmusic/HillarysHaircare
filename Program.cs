@@ -60,6 +60,14 @@ app.MapGet("/api/stylists/{id}", (HillarysHaircareDbContext db, int id) =>
     return Results.Ok(stylist);
 });
 
+app.MapPost("/api/stylists", (HillarysHaircareDbContext db, Stylist newStylist) => 
+{
+    db.Stylists.Add(newStylist);
+    db.SaveChanges();
+
+    return Results.Created($"/api/stylists/{newStylist.Id}", newStylist);
+});
+
 //customers
 
 app.MapGet("/api/customers", (HillarysHaircareDbContext db) =>
@@ -80,6 +88,14 @@ app.MapGet("/api/customers/{id}", (HillarysHaircareDbContext db, int id) =>
     }
 
     return Results.Ok(customer);
+});
+
+app.MapPost("/api/customers", (HillarysHaircareDbContext db, Customer newCustomer) =>
+{
+    db.Customers.Add(newCustomer);
+    db.SaveChanges();
+
+    return Results.Created($"/api/customers/{newCustomer.Id}", newCustomer);
 });
 
 //appointments
