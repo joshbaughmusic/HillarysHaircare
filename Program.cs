@@ -40,6 +40,21 @@ app.MapGet("/api/stylists", (HillarysHaircareDbContext db) =>
     return Results.Ok(db.Stylists.ToList());
 });
 
+app.MapGet("/api/stylists/{id}", (HillarysHaircareDbContext db, int id) => 
+{
+    Stylist stylist = db.Stylists
+    .Include(s => s.Appointments)
+    .ThenInclude(a => a.Customer)
+    .SingleOrDefault(s => s.Id == id);
+
+    if (stylist == null)
+    {
+        return Results.NotFound();
+    }
+
+    return Results.Ok(stylist);
+});
+
 //customers
 
 app.MapGet("/api/customers", (HillarysHaircareDbContext db) =>
