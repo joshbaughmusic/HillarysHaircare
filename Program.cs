@@ -87,7 +87,18 @@ app.MapGet("/api/appointments", (HillarysHaircareDbContext db) =>
         a.Customer = db.Customers.SingleOrDefault(c => c.Id == a.CustomerId);
         a.Stylist = db.Stylists.SingleOrDefault(s => s.Id == a.StylistId);
         
-        List<AppointmentService> foundAppServs = db.AppointmentServices.Where(apsv => apsv.AppointmentId == a.Id).ToList();
+    };
+    return Results.Ok(allAppointments.ToList());
+});
+
+app.MapGet("/api/appointments/{id}", (HillarysHaircareDbContext db, int id) =>
+{
+    Appointment appointment = db.Appointments
+        .Include(a => a.Customer)
+        .Include(a => a.Stylist)
+        .SingleOrDefault(a => a.Id == id);
+        
+        List<AppointmentService> foundAppServs = db.AppointmentServices.Where(apsv => apsv.AppointmentId == id).ToList();
 
         List<Service> foundServs = new List<Service>();
 
@@ -96,11 +107,11 @@ app.MapGet("/api/appointments", (HillarysHaircareDbContext db) =>
             Service singleServ = db.Services.FirstOrDefault(s => s.Id == apsv.ServiceId);
 
             foundServs.Add(singleServ);
-        };
+        }
 
-        a.Services = foundServs;
-    };
-    return Results.Ok(allAppointments.ToList());
+        appointment.Services = foundServs;
+
+    return Results.Ok(appointment);
 });
 
 app.Run();

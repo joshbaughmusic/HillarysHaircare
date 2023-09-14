@@ -9,6 +9,7 @@ import { CustomerList } from './components/customers/CustomerList.js';
 import { AppointmentList } from './components/appointments/AppointmentList.js';
 import { StylistDetails } from './components/stylists/StylistDetails.js';
 import { CustomerDetails } from './components/customers/CustomerDetails.js';
+import { AppointmentDetails } from './components/appointments/AppointmentDetails.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -38,10 +39,16 @@ root.render(
             element={<CustomerDetails />}
           />
         </Route>
-        <Route
-          path="appointments"
-          element={<AppointmentList />}
-        ></Route>
+        <Route path="appointments">
+          <Route
+            index
+            element={<AppointmentList />}
+          />
+          <Route
+            path=":id"
+            element={<AppointmentDetails />}
+          />
+        </Route>
       </Route>
     </Routes>
   </BrowserRouter>

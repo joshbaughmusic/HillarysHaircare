@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchAllAppointments } from '../../dataManager/appointmentData.js';
-import { Table } from 'reactstrap';
+import { Button, Table } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 export const AppointmentList = () => {
   const [upcomingAppointments, setUpcomingAppointments] = useState([]);
@@ -43,7 +44,11 @@ export const AppointmentList = () => {
                     <td>{a.stylist.name}</td>
                     <td>{a.customer.name}</td>
                     <td>{a.isCancelled ? <div>Yes</div> : <div>No</div>}</td>
-                    <td>Details</td>
+                    <td>
+                      <Link to={`/appointments/${a.id}`}>
+                        <Button color="primary">Details</Button>
+                      </Link>
+                    </td>
                   </tr>
                 </React.Fragment>
               );
@@ -70,7 +75,11 @@ export const AppointmentList = () => {
                     <td>{a.stylist.name}</td>
                     <td>{a.customer.name}</td>
                     <td>{a.isCancelled ? <div>Yes</div> : <div>No</div>}</td>
-                    <td>Details</td>
+                    <td>
+                      <Link to={`/appointments/${a.id}`}>
+                        <Button color="primary">Details</Button>
+                      </Link>
+                    </td>
                   </tr>
                 </React.Fragment>
               );
