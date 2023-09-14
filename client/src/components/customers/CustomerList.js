@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchAllCustomers } from '../../dataManager/customerData.js';
-import { Table } from 'reactstrap';
+import { Button, Table } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 export const CustomerList = () => {
   const [allCustomers, setAllCustomers] = useState([]);
@@ -34,7 +35,11 @@ export const CustomerList = () => {
                     <td>{c.name}</td>
                     <td>{c.email}</td>
                     <td>{c.phone}</td>
-                    <td>Details</td>
+                    <td>
+                      <Link to={`${c.id}`}>
+                        <Button color="primary">Details</Button>
+                      </Link>
+                    </td>
                   </tr>
                 </React.Fragment>
               );
