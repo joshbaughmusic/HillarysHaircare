@@ -13,5 +13,13 @@ public class Appointment
     public List<Service> Services { get; set; }
     public Stylist Stylist { get; set; }
     public Customer Customer { get; set; }
-    public decimal? TotalCost { get; }
+    public decimal? TotalCost { 
+        get
+        {
+            if (Services != null)
+            {
+                return Services.Sum(s => s.Price);
+            }
+            return null;
+        } }
 }
