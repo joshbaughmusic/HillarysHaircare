@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchAllStylists } from '../../dataManager/stylistData.js';
-import { Table } from 'reactstrap';
+import { Button, Table } from 'reactstrap';
+import {Link} from 'react-router-dom';
 
 export const StylistList = () => {
   const [allStylists, setAllStylists] = useState([]);
@@ -32,7 +33,12 @@ export const StylistList = () => {
                   <tr>
                     <td>{s.name}</td>
                     <td>{s.isActive ? <div>Yes</div> : <div>No</div>}</td>
-                    <td>Details</td>
+                    <td>
+                      <Link to={`${s.id}`}>
+                      <Button
+                      color='primary'>Details</Button>
+                      </Link>
+                    </td>
                   </tr>
                 </React.Fragment>
               );

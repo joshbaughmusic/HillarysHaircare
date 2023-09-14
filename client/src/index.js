@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { StylistList } from './components/stylists/StylistList.js';
 import { CustomerList } from './components/customers/CustomerList.js';
 import { AppointmentList } from './components/appointments/AppointmentList.js';
+import { StylistDetails } from './components/stylists/StylistDetails.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -16,10 +17,25 @@ root.render(
         path="/"
         element={<App />}
       >
-        <Route path="stylists" element={<StylistList />}></Route>
-        <Route path="customers" element={<CustomerList />}></Route>
-        <Route path="appointments" element={<AppointmentList />}></Route>
-      </Route >
+        <Route path="stylists">
+          <Route
+            index
+            element={<StylistList />}
+          />
+          <Route
+            path=":id"
+            element={<StylistDetails />}
+          />
+        </Route>
+        <Route
+          path="customers"
+          element={<CustomerList />}
+        ></Route>
+        <Route
+          path="appointments"
+          element={<AppointmentList />}
+        ></Route>
+      </Route>
     </Routes>
   </BrowserRouter>
 );
