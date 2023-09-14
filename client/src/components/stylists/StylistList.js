@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { fetchAllStylists } from '../../dataManager/stylistData.js';
 import { Button, Table } from 'reactstrap';
 import {Link} from 'react-router-dom';
+import { StylistNew } from './StylistNew.js';
 
 export const StylistList = () => {
   const [allStylists, setAllStylists] = useState([]);
@@ -18,6 +19,9 @@ export const StylistList = () => {
     <>
       <div className="container">
         <h3>Stylists</h3>
+        <br />
+        <StylistNew getAllStylists={getAllStylists}/>
+        <br />
         <Table>
           <thead>
             <tr>
