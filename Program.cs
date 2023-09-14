@@ -40,6 +40,11 @@ app.MapGet("/api/stylists", (HillarysHaircareDbContext db) =>
     return Results.Ok(db.Stylists.ToList());
 });
 
+app.MapGet("/api/stylists/active", (HillarysHaircareDbContext db) =>
+{
+    return Results.Ok(db.Stylists.Where(s => s.IsActive == true).ToList());
+});
+
 app.MapGet("/api/stylists/{id}", (HillarysHaircareDbContext db, int id) => 
 {
     Stylist stylist = db.Stylists
@@ -112,6 +117,23 @@ app.MapGet("/api/appointments/{id}", (HillarysHaircareDbContext db, int id) =>
         appointment.Services = foundServs;
 
     return Results.Ok(appointment);
+});
+
+app.MapPost("/api/appointments", (HillarysHaircareDbContext db, Appointment appointment) =>
+{
+    List<Service> matchedServices = db.Services.Where(s => appointment.Services.Select(serv => serv.Id).Contains(s.Id)).ToList();
+        appointment.Services = matchedServices;
+
+    db.Appointments.Add(appointment);
+    db.SaveChanges();
+    return Results.Created($"/api/appointments/{appointment.Id}", appointment);
+});
+
+//services
+
+app.MapGet("/api/services", (HillarysHaircareDbContext db) =>
+{
+    return Results.Ok(db.Services);
 });
 
 app.Run();
