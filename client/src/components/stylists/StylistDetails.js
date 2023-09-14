@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchSingleStylist } from '../../dataManager/stylistData.js';
+import { deactivateStylist, fetchSingleStylist } from '../../dataManager/stylistData.js';
 import { Button, Table } from 'reactstrap';
 import { Link, useParams } from 'react-router-dom';
 
@@ -15,6 +15,11 @@ export const StylistDetails = () => {
     getSingleStylist();
   }, []);
 
+  const handleDeactivate = () => {
+    deactivateStylist(id);
+    getSingleStylist();
+  }
+
   if (!stylist.appointments) {
     return null;
   }
@@ -25,6 +30,9 @@ export const StylistDetails = () => {
         <h3>{stylist.name}</h3>
         <span>Active: </span>
         {stylist.isActive ? <span>Yes</span> : <span>No</span>}
+        <Button
+        color='danger'
+        onClick={handleDeactivate}>Deactivate</Button>
         <br />
         <br />
         <h4>Appointments:</h4>

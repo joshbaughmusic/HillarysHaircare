@@ -15,3 +15,18 @@ export const postAppointment = (appointment) => {
     body: JSON.stringify(appointment),
   }).then((res) => res.json());
 };
+
+export const updateAppointment = (appointment, id) => {
+  return fetch(`${_apiUrl}/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(appointment),
+  })
+};
+
+export const cancelAppointment = (id) => {
+  return fetch(`${_apiUrl}/${id}/cancel`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+  })
+};

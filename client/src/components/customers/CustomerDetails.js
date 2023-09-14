@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { fetchSingleCustomer } from '../../dataManager/customerData.js';
 import { Button, Table } from 'reactstrap';
 import { Link, useParams } from 'react-router-dom';
+import { CustomerEdit } from './CustomerEdit.js';
 
 export const CustomerDetails = () => {
   const [customer, setCustomer] = useState({});
@@ -24,6 +25,10 @@ export const CustomerDetails = () => {
       <div className="container">
         <h3>{customer.name}</h3>
         <br />
+        <CustomerEdit
+          id={id}
+          getSingleCustomer={getSingleCustomer}
+        />
         <Table>
           <thead>
             <tr>

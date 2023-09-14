@@ -15,3 +15,11 @@ export const postCustomer = (customer) => {
     body: JSON.stringify(customer),
   }).then((res) => res.json());
 };
+
+export const updateCustomer = (customer, id) => {
+  return fetch(`${_apiUrl}/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(customer),
+  })
+};

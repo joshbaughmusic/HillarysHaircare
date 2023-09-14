@@ -68,6 +68,17 @@ app.MapPost("/api/stylists", (HillarysHaircareDbContext db, Stylist newStylist) 
     return Results.Created($"/api/stylists/{newStylist.Id}", newStylist);
 });
 
+app.MapPost("/api/stylists/{id}/deactivate", (HillarysHaircareDbContext db, int id) =>
+{
+    Stylist foundStylist = db.Stylists.SingleOrDefault(a => a.Id == id);
+
+    foundStylist.IsActive = false;
+
+    db.SaveChanges();
+
+    return Results.NoContent();
+});
+
 //customers
 
 app.MapGet("/api/customers", (HillarysHaircareDbContext db) =>
@@ -96,6 +107,20 @@ app.MapPost("/api/customers", (HillarysHaircareDbContext db, Customer newCustome
     db.SaveChanges();
 
     return Results.Created($"/api/customers/{newCustomer.Id}", newCustomer);
+});
+
+app.MapPut("/api/customers/{id}", (HillarysHaircareDbContext db, int id, Customer updatedCustomer) =>
+{
+    Customer foundCustomer = db.Customers.SingleOrDefault(c => c.Id == id);
+
+    foundCustomer.Name = updatedCustomer.Name;
+    foundCustomer.Email = updatedCustomer.Email;
+    foundCustomer.Phone = updatedCustomer.Phone;
+
+    db.SaveChanges();
+
+    return Results.NoContent();
+
 });
 
 //appointments
@@ -144,6 +169,18 @@ app.MapPost("/api/appointments", (HillarysHaircareDbContext db, Appointment appo
     db.SaveChanges();
     return Results.Created($"/api/appointments/{appointment.Id}", appointment);
 });
+
+app.MapPost("/api/appointments/{id}/cancel", (HillarysHaircareDbContext db, int id) =>
+{
+    Appointment foundAppointment = db.Appointments.SingleOrDefault(a => a.Id == id);
+
+    foundAppointment.IsCancelled = true;
+
+    db.SaveChanges();
+
+    return Results.NoContent();
+});
+
 
 //services
 

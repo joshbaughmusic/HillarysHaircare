@@ -19,3 +19,10 @@ export const postStylist = (stylist) => {
     body: JSON.stringify(stylist)
   }).then((res) => res.json())
 }
+
+export const deactivateStylist = (id) => {
+  return fetch(`${_apiUrl}/${id}/deactivate`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+  });
+};

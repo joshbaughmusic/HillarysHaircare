@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { fetchSingleAppointment } from '../../dataManager/appointmentData.js';
 import { Button, Table } from 'reactstrap';
 import { Link, useParams } from 'react-router-dom';
+import { AppointmentEdit } from './AppointmentEdit.js';
 
 export const AppointmentDetails = () => {
   const [appointment, setAppointment] = useState({});
@@ -23,6 +24,10 @@ export const AppointmentDetails = () => {
     <>
       <div className="container">
         <h3>Appointment #{appointment.id}</h3>
+        <AppointmentEdit
+          id={appointment.id}
+          getSingleAppointment={getSingleAppointment}
+        />
         <Table>
           <thead>
             <tr>
