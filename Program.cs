@@ -181,12 +181,39 @@ app.MapPost("/api/appointments/{id}/cancel", (HillarysHaircareDbContext db, int 
     return Results.NoContent();
 });
 
+app.MapPut("/api/appointments/{id}", (HillarysHaircareDbContext db, Appointment updatedAppointment, int id) =>
+{
+    Appointment foundAppointment = db.Appointments.SingleOrDefault(a => a.Id == id);
+
+    List<AppointmentService> oldAppointmentServices = db.AppointmentServices.Where(asp => asp.AppointmentId == id).ToList();
+    
+    foreach (AppointmentService aps in oldAppointmentServices)
+    { 
+            db.AppointmentServices.Remove(aps);
+    }
+
+    List<AppointmentService> matchedServices = db.Services.Where(s => updatedAppointment.Services.Select(serv => serv.Id).Contains(s.Id)).Select(s => new AppointmentService(){
+        ServiceId = s.Id,
+        AppointmentId = id
+    }).ToList();
+
+    db.AppointmentServices.AddRange(matchedServices);
+
+    db.SaveChanges();
+
+    return Results.NoContent();
+});
+
 
 //services
 
 app.MapGet("/api/services", (HillarysHaircareDbContext db) =>
 {
     return Results.Ok(db.Services);
+});
+app.MapGet("/api/appointmentservices", (HillarysHaircareDbContext db) =>
+{
+    return Results.Ok(db.AppointmentServices);
 });
 
 app.Run();

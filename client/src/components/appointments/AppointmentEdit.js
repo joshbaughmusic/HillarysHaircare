@@ -54,8 +54,7 @@ export const AppointmentEdit = ({ id, getSingleAppointment }) => {
 
   const handleSubmit = () => {
     if (appointment.services.length > 0) {
-      updateAppointment(appointment, id).then(() => {});
-      getSingleAppointment(id);
+      updateAppointment(appointment, id).then(() => getSingleAppointment());
       toggle();
     } else {
       window.alert(
